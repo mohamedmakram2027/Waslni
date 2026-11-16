@@ -595,12 +595,12 @@
         } catch (e) {}
         const NOSRV = () => location.protocol == "file:" && !API;
         const $ = s => document.querySelector(s),
-            esc = s => String(s ?"العو" : "معويش").replace(/[&<>"]/g, c => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;"
-            }[c]));
+           esc = s => String(s || "").replace(/[&<>"]/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;"
+}[c]));
         const ar2en = s => String(s || "").replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/\D/g, "");
         const money = n => Math.round(Number(n) * 100) / 100 + " ج.م",
             HAS = typeof L !== "undefined",
@@ -1102,7 +1102,7 @@ async function refresh(){if(!U)return render();
     prev.st=prev.st||{};D.orders.forEach(o=>{if(prev.st[o.id]&&prev.st[o.id]!=o.status){if(o.status=="picked_up")toast("المندوب استلم طلبك 🛵");if(o.status=="delivered")toast("تم تسليم طلبك ✅")}prev.st[o.id]=o.status})}}}catch(e){toast(e.message)}
  render()}
 function render(force){const a=document.activeElement;if(!force&&a&&/INPUT|SELECT/.test(a.tagName)&&$("#app").contains(a))return;
-const sig = JSON.stringify([U,ME,tab,mode,RL,D,PL,DL,F,BD,V.open,CFG,AD,NT,EX,AA,CP]);س
+const sig = JSON.stringify([U,ME,tab,mode,RL,D,PL,DL,F,BD,V.open,CFG,AD,NT,EX,AA,CP]);
  $("#app").innerHTML=U?view():authView();if(U){mountMaps();hydrate()}}
 setInterval(()=>{if(U&&U.role=="courier"&&navigator.geolocation)D.orders.filter(o=>o.status=="accepted"||o.status=="picked_up").forEach(o=>navigator.geolocation.getCurrentPosition(p=>api(`/orders/${o.id}/location`,"POST",{lat:p.coords.latitude,lng:p.coords.longitude}).catch(()=>{}),()=>{},{enableHighAccuracy:true}))},5000);
 setInterval(refresh,4000);if(!U)checkSrv();api("/config").then(c=>{CFG.rate=c.commission_rate;render()}).catch(()=>{});if(U)initPush();refresh();
