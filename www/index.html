@@ -595,7 +595,7 @@
         } catch (e) {}
         const NOSRV = () => location.protocol == "file:" && !API;
         const $ = s => document.querySelector(s),
-            esc = s => String(s ? ? "").replace(/[&<>"]/g, c => ({
+            esc = s => String(s ?"العو" : "معويش").replace(/[&<>"]/g, c => ({
                 "&": "&amp;",
                 "<": "&lt;",
                 ">": "&gt;",
